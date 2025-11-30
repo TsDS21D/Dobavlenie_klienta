@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Счетчик кликов</title>
+    <title>Система управления заказами</title>
     <style>
         * {
             margin: 0;
@@ -13,126 +13,297 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
         }
 
         .container {
-            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
             background: white;
-            padding: 3rem;
             border-radius: 20px;
+            padding: 3rem;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 400px;
-            width: 90%;
         }
 
         h1 {
             color: #333;
             margin-bottom: 2rem;
-            font-size: 2rem;
+            text-align: center;
+            font-size: 2.5rem;
         }
 
-        #counter-display {
-            font-size: 4rem;
-            font-weight: bold;
-            color: #667eea;
-            margin: 2rem 0;
-            transition: transform 0.2s ease;
+        .status {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            display: inline-block;
+            width: 100%;
         }
 
-        #counter-display.pulse {
-            animation: pulse 0.3s ease;
+        .status.connected {
+            background: #c8e6c9;
+            color: #2e7d32;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+        .status.disconnected {
+            background: #ffcdd2;
+            color: #c62828;
+        }
+
+        .form-section {
+            background: #f5f5f5;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .form-section h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            color: #555;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        input, textarea {
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.2);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
         }
 
         button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            flex: 1;
+            padding: 1rem;
             border: none;
-            padding: 1rem 3rem;
-            font-size: 1.2rem;
-            border-radius: 50px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
 
-        button:hover {
+        .btn-submit:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
         }
 
-        button:active {
-            transform: translateY(0);
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
-        .status {
-            margin-top: 1.5rem;
-            font-size: 0.9rem;
+        .btn-clear {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-clear:hover {
+            background: #bdbdbd;
+        }
+
+        .orders-section h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .orders-list {
+            list-style: none;
+        }
+
+        .order-item {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .order-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .customer-name {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .description {
             color: #666;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+            word-wrap: break-word;
         }
 
-        .status.connected {
-            color: #4caf50;
+        .order-time {
+            color: #999;
+            font-size: 0.85rem;
         }
 
-        .status.disconnected {
-            color: #f44336;
+        .empty-message {
+            text-align: center;
+            color: #999;
+            padding: 2rem;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Счетчик кликов</h1>
-        <div id="counter-display">{{ count }}</div>
-        <button id="click-button">Нажми меня!</button>
-        <div id="status" class="status">Подключение...</div>
+        <h1>📋 Система управления заказами</h1>
+        
+        <div id="status" class="status disconnected">Подключение...</div>
+
+        <div class="form-section">
+            <h2>Добавить новый заказ</h2>
+            
+            <div class="form-group">
+                <label for="customer-name">Название клиента:</label>
+                <input 
+                    type="text" 
+                    id="customer-name" 
+                    placeholder="Например: ООО Красота" 
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="order-number">Номер заказа:</label>
+                <input 
+                    type="text" 
+                    id="order-number" 
+                    placeholder="Например: 001-2024" 
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="description">Описание заказа:</label>
+                <textarea 
+                    id="description" 
+                    placeholder="Опишите что нужно сделать в этом заказе..." 
+                    required
+                ></textarea>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-submit" id="submit-btn">➕ Добавить заказ</button>
+                <button type="button" class="btn-clear" id="clear-btn">🔄 Очистить</button>
+            </div>
+        </div>
+
+        <div class="orders-section">
+            <h2>Список заказов</h2>
+            <ul class="orders-list" id="orders-list">
+                <li class="empty-message">Еще нет заказов. Добавьте первый заказ выше.</li>
+            </ul>
+        </div>
     </div>
 
     <script>
-        const counterDisplay = document.getElementById('counter-display');
-        const clickButton = document.getElementById('click-button');
+        // Получаем HTML элементы
+        const customerNameInput = document.getElementById('customer-name');
+        const orderNumberInput = document.getElementById('order-number');
+        const descriptionInput = document.getElementById('description');
+        const submitBtn = document.getElementById('submit-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const ordersList = document.getElementById('orders-list');
         const statusElement = document.getElementById('status');
-        
+
+        // WebSocket переменные
         const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const wsUrl = `${protocol}//${window.location.host}/ws/counter/`;
-        
+        const wsUrl = `${protocol}//${window.location.host}/ws/order`;
+
         let socket;
         let reconnectInterval;
-        
+
+        // Функция подключения к WebSocket
         function connect() {
+            console.log('Подключение к WebSocket:', wsUrl);
             socket = new WebSocket(wsUrl);
-            
+
             socket.onopen = function(e) {
-                console.log('WebSocket подключен');
-                statusElement.textContent = 'Подключено';
+                console.log('✅ WebSocket подключен');
+                statusElement.textContent = '✅ Подключено';
                 statusElement.className = 'status connected';
+                
                 if (reconnectInterval) {
                     clearInterval(reconnectInterval);
                     reconnectInterval = null;
                 }
             };
-            
+
             socket.onmessage = function(event) {
+                console.log('Получено сообщение:', event.data);
                 const data = JSON.parse(event.data);
-                counterDisplay.textContent = data.count;
-                counterDisplay.classList.add('pulse');
-                setTimeout(() => counterDisplay.classList.remove('pulse'), 300);
+
+                if (data.type === 'initial_load' || data.type === 'order_update') {
+                    updateOrdersList(data.orders);
+                }
             };
-            
+
             socket.onclose = function(event) {
-                console.log('WebSocket отключен');
-                statusElement.textContent = 'Переподключение...';
+                console.log('❌ WebSocket отключен');
+                statusElement.textContent = '⏳ Переподключение...';
                 statusElement.className = 'status disconnected';
-                
+
                 if (!reconnectInterval) {
                     reconnectInterval = setInterval(() => {
                         console.log('Попытка переподключения...');
@@ -140,24 +311,79 @@
                     }, 3000);
                 }
             };
-            
+
             socket.onerror = function(error) {
-                console.log('Ошибка WebSocket:', error);
+                console.error('❌ Ошибка WebSocket:', error);
             };
         }
-        
-        connect();
-        
-        clickButton.addEventListener('click', function() {
-            if (socket.readyState === WebSocket.OPEN) {
-                socket.send(JSON.stringify({
-                    'action': 'increment'
-                }));
-            } else {
-                statusElement.textContent = 'Нет соединения';
-                statusElement.className = 'status disconnected';
+
+        // Функция обновления списка заказов
+        function updateOrdersList(orders) {
+            console.log('Обновляем список заказов:', orders);
+            
+            ordersList.innerHTML = '';
+
+            if (orders.length === 0) {
+                ordersList.innerHTML = '<li class="empty-message">Еще нет заказов. Добавьте первый заказ выше.</li>';
+                return;
             }
+
+            orders.forEach((order, index) => {
+                const li = document.createElement('li');
+                li.className = 'order-item';
+
+                li.innerHTML = `
+                    <div class="order-number">#${index + 1}. Заказ №${order.order_number}</div>
+                    <div class="customer-name">👤 ${order.customer_name}</div>
+                    <div class="description">📝 ${order.description}</div>
+                    <div class="order-time">⏰ ${order.created_at}</div>
+                `;
+
+                ordersList.appendChild(li);
+            });
+        }
+
+        // Обработчик кнопки "Добавить заказ"
+        submitBtn.addEventListener('click', function() {
+            const customerName = customerNameInput.value.trim();
+            const orderNumber = orderNumberInput.value.trim();
+            const description = descriptionInput.value.trim();
+
+            if (!customerName || !orderNumber || !description) {
+                alert('⚠️ Пожалуйста, заполните все поля!');
+                return;
+            }
+
+            if (socket.readyState !== WebSocket.OPEN) {
+                alert('❌ Нет соединения с сервером. Попробуйте позже.');
+                return;
+            }
+
+            socket.send(JSON.stringify({
+                action: 'add_order',
+                customer_name: customerName,
+                order_number: orderNumber,
+                description: description
+            }));
+
+            clearForm();
         });
+
+        // Обработчик кнопки "Очистить"
+        clearBtn.addEventListener('click', function() {
+            clearForm();
+        });
+
+        // Функция очистки формы
+        function clearForm() {
+            customerNameInput.value = '';
+            orderNumberInput.value = '';
+            descriptionInput.value = '';
+            customerNameInput.focus();
+        }
+
+        // Запуск
+        connect();
     </script>
 </body>
 </html>

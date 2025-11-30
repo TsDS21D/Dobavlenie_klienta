@@ -1,6 +1,10 @@
 from django.shortcuts import render
-from .models import ClickCounter
+from .models import Order
 
 def index(request):
-    counter = ClickCounter.get_current_count()
-    return render(request, 'counter/index.html', {'count': counter})
+    """
+    Главная view функция.
+    Она обрабатывает HTTP GET запрос на /
+    """
+    orders = Order.objects.all()
+    return render(request, 'counter/index.html', {'orders': orders})
