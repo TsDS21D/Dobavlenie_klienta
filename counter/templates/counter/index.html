@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
@@ -107,7 +107,6 @@
         }
 
         button {
-            flex: 1;
             padding: 1rem;
             border: none;
             border-radius: 8px;
@@ -118,6 +117,7 @@
         }
 
         .btn-submit {
+            flex: 1;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
@@ -134,6 +134,7 @@
         }
 
         .btn-clear {
+            flex: 1;
             background: #e0e0e0;
             color: #333;
         }
@@ -172,11 +173,34 @@
             }
         }
 
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
         .order-number {
             color: #667eea;
             font-weight: bold;
             font-size: 1.2rem;
-            margin-bottom: 0.5rem;
+        }
+
+        .order-hours {
+            background: #667eea;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .order-hours.warning {
+            background: #ff9800;
+        }
+
+        .order-hours.critical {
+            background: #f44336;
         }
 
         .customer-name {
@@ -192,9 +216,66 @@
             word-wrap: break-word;
         }
 
-        .order-time {
-            color: #999;
-            font-size: 0.85rem;
+        .order-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 0.8rem;
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn-edit {
+            flex: 1;
+            padding: 0.6rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-edit:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .btn-delete {
+            flex: 1;
+            padding: 0.6rem;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-delete:hover {
+            background: #da190b;
+            transform: translateY(-2px);
         }
 
         .empty-message {
@@ -202,6 +283,106 @@
             color: #999;
             padding: 2rem;
             font-style: italic;
+        }
+
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-content h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-modal-save {
+            flex: 1;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-modal-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-modal-cancel {
+            flex: 1;
+            padding: 1rem;
+            background: #e0e0e0;
+            color: #333;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-modal-cancel:hover {
+            background: #bdbdbd;
+        }
+
+        .sort-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-sort {
+            padding: 0.6rem 1rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-sort:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .btn-sort.active {
+            background: #764ba2;
+            box-shadow: 0 4px 12px rgba(118, 75, 162, 0.4);
         }
     </style>
 </head>
@@ -225,22 +406,21 @@
             </div>
 
             <div class="form-group">
-                <label for="order-number">Номер заказа:</label>
-                <input 
-                    type="text" 
-                    id="order-number" 
-                    placeholder="Например: 001-2024" 
-                    required
-                >
-            </div>
-
-            <div class="form-group">
                 <label for="description">Описание заказа:</label>
                 <textarea 
                     id="description" 
                     placeholder="Опишите что нужно сделать в этом заказе..." 
                     required
                 ></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="ready-datetime">Дата и время готовности:</label>
+                <input 
+                    type="datetime-local" 
+                    id="ready-datetime" 
+                    required
+                >
             </div>
 
             <div class="button-group">
@@ -251,30 +431,69 @@
 
         <div class="orders-section">
             <h2>Список заказов</h2>
+            <div class="sort-buttons">
+                <button class="btn-sort" id="sort-by-number">📊 По номеру</button>
+                <button class="btn-sort active" id="sort-by-deadline">⏰ По дедлайну</button>
+            </div>
             <ul class="orders-list" id="orders-list">
                 <li class="empty-message">Еще нет заказов. Добавьте первый заказ выше.</li>
             </ul>
         </div>
     </div>
 
+    <!-- Модальное окно для редактирования -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h2>Редактировать заказ</h2>
+            
+            <div class="form-group">
+                <label for="edit-customer-name">Название клиента:</label>
+                <input type="text" id="edit-customer-name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="edit-description">Описание заказа:</label>
+                <textarea id="edit-description" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="edit-ready-datetime">Дата и время готовности:</label>
+                <input type="datetime-local" id="edit-ready-datetime" required>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn-modal-save" id="save-edit-btn">💾 Сохранить</button>
+                <button class="btn-modal-cancel" id="cancel-edit-btn">❌ Отменить</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Получаем HTML элементы
         const customerNameInput = document.getElementById('customer-name');
-        const orderNumberInput = document.getElementById('order-number');
         const descriptionInput = document.getElementById('description');
+        const readyDatetimeInput = document.getElementById('ready-datetime');
         const submitBtn = document.getElementById('submit-btn');
         const clearBtn = document.getElementById('clear-btn');
         const ordersList = document.getElementById('orders-list');
         const statusElement = document.getElementById('status');
+        
+        const editModal = document.getElementById('editModal');
+        const editCustomerNameInput = document.getElementById('edit-customer-name');
+        const editDescriptionInput = document.getElementById('edit-description');
+        const editReadyDatetimeInput = document.getElementById('edit-ready-datetime');
+        const saveEditBtn = document.getElementById('save-edit-btn');
+        const cancelEditBtn = document.getElementById('cancel-edit-btn');
 
-        // WebSocket переменные
         const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
         const wsUrl = `${protocol}//${window.location.host}/ws/order`;
 
         let socket;
         let reconnectInterval;
+        let editingOrderNumber = null;
+        let currentOrders = [];
+        let sortBy = 'deadline'; // 'number' или 'deadline'
+        let sortDirection = 1; // 1 для возрастания, -1 для убывания
 
-        // Функция подключения к WebSocket
         function connect() {
             console.log('Подключение к WebSocket:', wsUrl);
             socket = new WebSocket(wsUrl);
@@ -317,39 +536,132 @@
             };
         }
 
-        // Функция обновления списка заказов
+        function getHoursClassName(hours) {
+            if (hours <= 1) return 'order-hours critical';
+            if (hours <= 3) return 'order-hours warning';
+            return 'order-hours';
+        }
+
         function updateOrdersList(orders) {
             console.log('Обновляем список заказов:', orders);
             
+            currentOrders = orders;
+            renderOrders();
+        }
+
+        function renderOrders() {
             ordersList.innerHTML = '';
 
-            if (orders.length === 0) {
+            if (currentOrders.length === 0) {
                 ordersList.innerHTML = '<li class="empty-message">Еще нет заказов. Добавьте первый заказ выше.</li>';
                 return;
             }
 
-            orders.forEach((order, index) => {
+            let sortedOrders = [...currentOrders];
+            
+            if (sortBy === 'number') {
+                // Сортировка по номеру заказа
+                sortedOrders.sort((a, b) => {
+                    return (parseInt(a.order_number) - parseInt(b.order_number)) * sortDirection;
+                });
+            } else if (sortBy === 'deadline') {
+                // Сортировка по дедлайну
+                sortedOrders.sort((a, b) => {
+                    // Преобразуем формат "02.12.2025 15:30" в дату
+                    const [dateA, timeA] = a.ready_datetime.split(' ');
+                    const [dateB, timeB] = b.ready_datetime.split(' ');
+                    const [dayA, monthA, yearA] = dateA.split('.');
+                    const [dayB, monthB, yearB] = dateB.split('.');
+                    
+                    const dateObjA = new Date(`${yearA}-${monthA}-${dayA}T${timeA}`);
+                    const dateObjB = new Date(`${yearB}-${monthB}-${dayB}T${timeB}`);
+                    
+                    return (dateObjA - dateObjB) * sortDirection;
+                });
+            }
+
+            sortedOrders.forEach((order) => {
                 const li = document.createElement('li');
                 li.className = 'order-item';
 
+                const hours = order.working_hours_remaining;
+                const hoursClass = getHoursClassName(hours);
+
                 li.innerHTML = `
-                    <div class="order-number">#${index + 1}. Заказ №${order.order_number}</div>
+                    <div class="order-header">
+                        <div class="order-number">#${order.order_number}</div>
+                        <div class="${hoursClass}">⏱️ ${hours}ч</div>
+                    </div>
                     <div class="customer-name">👤 ${order.customer_name}</div>
                     <div class="description">📝 ${order.description}</div>
-                    <div class="order-time">⏰ ${order.created_at}</div>
+                    <div class="order-details">
+                        <div class="detail-item">
+                            <span class="detail-label">📅 Готовность:</span>
+                            <span>${order.ready_datetime}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">🕐 Добавлен:</span>
+                            <span>${order.created_at}</span>
+                        </div>
+                    </div>
+                    <div class="order-actions">
+                        <button class="btn-edit" data-order-number="${order.order_number}" data-customer-name="${order.customer_name}" data-description="${order.description}" data-ready-datetime="${order.ready_datetime}">✏️ Редактировать</button>
+                        <button class="btn-delete" data-order-number="${order.order_number}">🗑️ Удалить</button>
+                    </div>
                 `;
 
                 ordersList.appendChild(li);
+
+                // Обработчик кнопки редактирования
+                li.querySelector('.btn-edit').addEventListener('click', function() {
+                    openEditModal(order);
+                });
+
+                // Обработчик кнопки удаления
+                li.querySelector('.btn-delete').addEventListener('click', function() {
+                    if (confirm(`Вы уверены, что хотите удалить заказ #${order.order_number}?`)) {
+                        deleteOrder(order.order_number);
+                    }
+                });
             });
         }
 
-        // Обработчик кнопки "Добавить заказ"
+        function openEditModal(order) {
+            editingOrderNumber = order.order_number;
+            editCustomerNameInput.value = order.customer_name;
+            editDescriptionInput.value = order.description;
+            // Преобразуем формат даты обратно для datetime-local
+            const dateStr = order.ready_datetime.replace(' ', 'T').split(' ')[0];
+            const [day, month, year] = order.ready_datetime.split(' ')[0].split('.');
+            const [time] = order.ready_datetime.split(' ')[1].split(':');
+            const [hour, minute] = order.ready_datetime.split(':');
+            editReadyDatetimeInput.value = `${year}-${month}-${day}T${hour}:${minute}`;
+            editModal.classList.add('show');
+        }
+
+        function closeEditModal() {
+            editModal.classList.remove('show');
+            editingOrderNumber = null;
+        }
+
+        function deleteOrder(orderNumber) {
+            if (socket.readyState !== WebSocket.OPEN) {
+                alert('❌ Нет соединения с сервером.');
+                return;
+            }
+
+            socket.send(JSON.stringify({
+                action: 'delete_order',
+                order_number: parseInt(orderNumber)
+            }));
+        }
+
         submitBtn.addEventListener('click', function() {
             const customerName = customerNameInput.value.trim();
-            const orderNumber = orderNumberInput.value.trim();
             const description = descriptionInput.value.trim();
+            const readyDatetime = readyDatetimeInput.value;
 
-            if (!customerName || !orderNumber || !description) {
+            if (!customerName || !description || !readyDatetime) {
                 alert('⚠️ Пожалуйста, заполните все поля!');
                 return;
             }
@@ -362,28 +674,135 @@
             socket.send(JSON.stringify({
                 action: 'add_order',
                 customer_name: customerName,
-                order_number: orderNumber,
-                description: description
+                description: description,
+                ready_datetime: readyDatetime
             }));
 
             clearForm();
         });
 
-        // Обработчик кнопки "Очистить"
         clearBtn.addEventListener('click', function() {
             clearForm();
         });
 
-        // Функция очистки формы
+        saveEditBtn.addEventListener('click', function() {
+            const customerName = editCustomerNameInput.value.trim();
+            const description = editDescriptionInput.value.trim();
+            const readyDatetime = editReadyDatetimeInput.value;
+
+            if (!customerName || !description || !readyDatetime) {
+                alert('⚠️ Пожалуйста, заполните все поля!');
+                return;
+            }
+
+            if (socket.readyState !== WebSocket.OPEN) {
+                alert('❌ Нет соединения с сервером.');
+                return;
+            }
+
+            socket.send(JSON.stringify({
+                action: 'update_order',
+                order_number: editingOrderNumber,
+                customer_name: customerName,
+                description: description,
+                ready_datetime: readyDatetime
+            }));
+
+            closeEditModal();
+        });
+
+        cancelEditBtn.addEventListener('click', closeEditModal);
+
+        editModal.addEventListener('click', function(e) {
+            if (e.target === editModal) {
+                closeEditModal();
+            }
+        });
+
+        // Обработчики кнопок сортировки
+        document.getElementById('sort-by-number').addEventListener('click', function() {
+            const btnNumber = document.getElementById('sort-by-number');
+            const btnDeadline = document.getElementById('sort-by-deadline');
+            
+            if (sortBy === 'number') {
+                // Если уже сортируем по номеру, меняем направление
+                sortDirection *= -1;
+            } else {
+                // Переключаемся на сортировку по номеру (устанавливаем -1 для видимого изменения)
+                sortBy = 'number';
+                sortDirection = -1;
+                btnDeadline.classList.remove('active');
+            }
+            
+            btnNumber.classList.add('active');
+            renderOrders();
+        });
+
+        document.getElementById('sort-by-deadline').addEventListener('click', function() {
+            const btnNumber = document.getElementById('sort-by-number');
+            const btnDeadline = document.getElementById('sort-by-deadline');
+            
+            if (sortBy === 'deadline') {
+                // Если уже сортируем по дедлайну, меняем направление
+                sortDirection *= -1;
+            } else {
+                // Переключаемся на сортировку по дедлайну (устанавливаем -1 для видимого изменения)
+                sortBy = 'deadline';
+                sortDirection = -1;
+                btnNumber.classList.remove('active');
+            }
+            
+            btnDeadline.classList.add('active');
+            renderOrders();
+        });
+
         function clearForm() {
             customerNameInput.value = '';
-            orderNumberInput.value = '';
             descriptionInput.value = '';
+            readyDatetimeInput.value = '';
+            setDefaultDateTime();
             customerNameInput.focus();
         }
 
-        // Запуск
+        function getNextBusinessDay() {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            while (tomorrow.getDay() === 0 || tomorrow.getDay() === 6) {
+                tomorrow.setDate(tomorrow.getDate() + 1);
+            }
+            
+            tomorrow.setHours(15, 0, 0, 0);
+            
+            return tomorrow;
+        }
+
+        function setDefaultDateTime() {
+            const nextBusinessDay = getNextBusinessDay();
+            
+            const year = nextBusinessDay.getFullYear();
+            const month = String(nextBusinessDay.getMonth() + 1).padStart(2, '0');
+            const day = String(nextBusinessDay.getDate()).padStart(2, '0');
+            const hours = String(nextBusinessDay.getHours()).padStart(2, '0');
+            const minutes = String(nextBusinessDay.getMinutes()).padStart(2, '0');
+            
+            readyDatetimeInput.value = `${year}-${month}-${day}T${hours}:${minutes}`;
+        }
+
+        function startAutoRefresh() {
+            // Автоматически обновляем список заказов каждые 30 секунд для пересчета рабочих часов
+            setInterval(() => {
+                if (socket.readyState === WebSocket.OPEN) {
+                    socket.send(JSON.stringify({
+                        action: 'refresh_orders'
+                    }));
+                }
+            }, 300000); // 300 секунд
+        }
+
         connect();
+        setDefaultDateTime();
+        startAutoRefresh();
     </script>
 </body>
 </html>
