@@ -685,11 +685,11 @@
             <h2>Добавить новый заказ</h2>
             
             <div class="form-group">
-                <label for="customer-name">Название клиента:</label>
+                <label for="customer-name">Клиент:</label>
                 <input 
                     type="text" 
                     id="customer-name" 
-                    placeholder="Например: ООО Красота" 
+                    placeholder="Название и контактные данные" 
                     required
                 >
             </div>
@@ -736,7 +736,7 @@
             <h2>Редактировать заказ</h2>
             
             <div class="form-group">
-                <label for="edit-customer-name">Название клиента:</label>
+                <label for="edit-customer-name">Клиент:</label>
                 <input type="text" id="edit-customer-name" required>
             </div>
 
@@ -878,7 +878,7 @@
 
                 li.innerHTML = `
                     <div class="order-header">
-                        <div class="order-number">#${order.order_number}</div>
+                        <div class="order-number">№${order.order_number}</div>
                         <div class="${hoursClass}">⏱️ ${hours}ч</div>
                     </div>
                     <div class="customer-name">👤 ${order.customer_name}</div>
@@ -908,7 +908,7 @@
 
                 // Обработчик кнопки удаления
                 li.querySelector('.btn-delete').addEventListener('click', function() {
-                    if (confirm(`Вы уверены, что хотите удалить заказ #${order.order_number}?`)) {
+                    if (confirm(`Вы уверены, что хотите удалить заказ №${order.order_number}?`)) {
                         deleteOrder(order.order_number);
                     }
                 });
@@ -1086,7 +1086,7 @@
                         action: 'refresh_orders'
                     }));
                 }
-            }, 30000); // 30 секунд
+            }, 60000); // 60 секунд
         }
 
         connect();
